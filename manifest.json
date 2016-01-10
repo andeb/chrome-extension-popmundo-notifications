@@ -8,20 +8,23 @@
     "notifications"
   ],
   "background": {
-    "scripts" : ["background.js"]
-    },
-    "content_scripts": [
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
     {
       "matches": [
-      "http://*.popmundo.com/*"
+        "http://*.popmundo.com/*"
       ],
       "js": [
-      "content_scripts.js"
+        "content_scripts.js"
       ]
     }
-    ],
-    "icons": {
-      "16": "images/p5757.png", // TODO missing resize
-      "128": "images/p5757.png" // TODO missing resize
-    }
+  ],
+  "icons": {
+    "16": "images/p5757.png",
+    "128": "images/p5757.png",
+    "_comment" : "TODO Fix pictures"
   }
+}
