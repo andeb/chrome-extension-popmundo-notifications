@@ -1,0 +1,27 @@
+{
+  "name": "Popmundo Notification",
+  "description": "An unofficial app to show popmundo notifications.",
+  "version": "0.1",
+  "manifest_version": 2,
+  "permissions": [
+    "http://*.popmundo.com/*",
+    "notifications"
+  ],
+  "background": {
+    "scripts" : ["background.js"]
+    },
+    "content_scripts": [
+    {
+      "matches": [
+      "http://*.popmundo.com/*"
+      ],
+      "js": [
+      "content_scripts.js"
+      ]
+    }
+    ],
+    "icons": {
+      "16": "images/p5757.png", // TODO missing resize
+      "128": "images/p5757.png" // TODO missing resize
+    }
+  }
