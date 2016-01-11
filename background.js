@@ -1,17 +1,4 @@
-/*
-Json Values.
-
-DateCreated: "10/01/2016"
-Int1: 0
-Repeats: 1
-Text: ""
-TimeCreated: "21:58"
-Type: 56
-UID: ""
-Url: ""
-*/
-
-var state = []; // TODO: never cleaned.. memory leak?
+var state = [];
 
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
 	var xhr = new XMLHttpRequest();
@@ -58,5 +45,19 @@ function sendNotification(value) {
 		//,eventTime : eventTime.getTime()
 	};
 
+	// TODO Create action
 	chrome.notifications.create(value.UID, options);
 }
+
+/*
+Json Values.
+
+DateCreated: "10/01/2016"
+Int1: 0
+Repeats: 1
+Text: ""
+TimeCreated: "21:58"
+Type: 56
+UID: ""
+Url: ""
+*/
