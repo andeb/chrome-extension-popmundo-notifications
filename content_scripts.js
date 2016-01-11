@@ -2,14 +2,19 @@ var state = {};
 var notification = document.getElementById('ctl00_ctl05_ucMenuNotifications_imgNotifications');
 
 if (notification) {
-	setInterval(function() {
-		if (hasNotification()) {
-			var host = window.location.host;
-			chrome.extension.sendRequest({ host : host});	
-		}
-	}(), 1000 * 60); // one minute is a good number?!
+	verifyNotification();
 } else {
 	console.log('Not found notification box.');
+}
+function verifyNotification() {
+	if (hasNotification()) { // one minute is a good number?!
+		setTimeout(verifyNotification, 1000 * 60);
+
+		var host = window.location.host;
+		chrome.extension.sendRequest({ host : host});
+	} else {
+		setTimeout(verifyNotification, 1000);
+	}
 }
 
 function hasNotification() {
