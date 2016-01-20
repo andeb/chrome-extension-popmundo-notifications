@@ -1,35 +1,38 @@
-
-	chrome.webRequest.onCompleted.addListener(function(details) {
-		console.log(details);
-	}, { urls: ["http://*.popmundo.com/WebServices/A/Open.asmx/GetMenuNotificationCount"] });
-
-
 var state = [];
+var messagesNumber = 0;
 
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
-	var xhr = new XMLHttpRequest();
+	if (messagesNumber == request.messagesNumber)
+		return false;
 
-	xhr.open("POST", "http://" + request.host + "/WebServices/A/Open.asmx/GetMenuNotifications", true);
-	xhr.setRequestHeader('Content-Type', 'application/json')
-	xhr.send('{ts : "' + new Date().getTime() + '"}' );
+	// TODO: change pages title
 
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState==4) {
-			var value = xhr.responseText.replace(/\\"/g, "'"); // TODO: need better solution here.
-				value = JSON.parse(value).d.replace(/'/g, '"');
-			var result = JSON.parse(value);
-			
-			for (var k in result) {
-				var UID = result[k].UID;
+	if (messagesNumber < request.messagesNumber) {
+		var xhr = new XMLHttpRequest();
 
-				if (!contains(state, UID)) {
-					console.log(result[k]);
-					state.push(result[k]);
-					sendNotification(result[k]);
+		xhr.open("POST", "http://" + request.host + "/WebServices/A/Open.asmx/GetMenuNotifications", true);
+		xhr.setRequestHeader('Content-Type', 'application/json')
+		xhr.send('{ts : "' + new Date().getTime() + '"}' );
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState==4) {
+				var value = xhr.responseText.replace(/\\"/g, "'"); // TODO: need better solution here.
+					value = JSON.parse(value).d.replace(/'/g, '"');
+				var result = JSON.parse(value);
+				
+				for (var k in result) {
+					var UID = result[k].UID;
+
+					if (!contains(state, UID)) {
+						console.log(result[k]);
+						state.push(result[k]);
+						sendNotification(result[k]);
+					}
 				}
 			}
 		}
 	}
+	messagesNumber = request.messagesNumber;
 });
 
 function contains(array, value) {
