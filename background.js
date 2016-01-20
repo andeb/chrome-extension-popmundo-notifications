@@ -5,20 +5,20 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 	if (messagesNumber == request.messagesNumber)
 		return false;
 
-	// TODO: change pages title
+	// TODO: change pages title like Facebook (eg.: (4) popomundo)
 
 	if (messagesNumber < request.messagesNumber) {
 		var xhr = new XMLHttpRequest();
 
 		xhr.open("POST", "http://" + request.host + "/WebServices/A/Open.asmx/GetMenuNotifications", true);
-		xhr.setRequestHeader('Content-Type', 'application/json')
+		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
 		xhr.send('{ts : "' + new Date().getTime() + '"}' );
 
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState==4) {
-				var value = xhr.responseText.replace(/\\"/g, "'"); // TODO: need better solution here.
-					value = JSON.parse(value).d.replace(/'/g, '"');
-				var result = JSON.parse(value);
+				// var value = xhr.responseText.replace(/"/g, "'"); // TODO: need better solution here.
+				//	value = JSON.parse(value).d.replace(/'/g, '"');
+				var result = JSON.parse( JSON.parse( xhr.responseText ).d );
 				
 				for (var k in result) {
 					var UID = result[k].UID;
@@ -59,14 +59,34 @@ function sendNotification(value) {
 }
 
 /*
-Json Values.
+Example:
 
-DateCreated: "10/01/2016"
-Int1: 0
-Repeats: 1
-Text: ""
-TimeCreated: "21:58"
-Type: 56
-UID: ""
-Url: ""
+{
+    "UID": "",
+    "DateCreated": "20/01/2016",
+    "TimeCreated": "21:53",
+    "Text": "Anúncio da Comunidade",
+    "Url": "/World/Popmundo.aspx",
+    "Repeats": 1,
+    "Type": 37,
+    "Int1": 0
+}, {
+    "UID": "",
+    "DateCreated": "20/01/2016",
+    "TimeCreated": "09:25",
+    "Text": "Message",
+    "Url": "/World/Popmundo.aspx/Conversations/Conversation/3315659",
+    "Repeats": 1,
+    "Type": 56,
+    "Int1": 0
+}, {
+    "UID": "",
+    "DateCreated": "20/01/2016",
+    "TimeCreated": "01:23",
+    "Text": "Message",
+    "Url": "/World/Popmundo.aspx/Conversations/SystemMessages",
+    "Repeats": 1,
+    "Type": 67,
+    "Int1": 0
+}
 */
