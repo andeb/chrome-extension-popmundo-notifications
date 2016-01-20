@@ -1,8 +1,26 @@
 var state = {};
 var notification = document.getElementById('ctl00_ctl05_ucMenuNotifications_imgNotifications');
+    notification = document.getElementById('top-menu-notifications-num');
 
 if (notification) {
-	verifyNotification();
+
+	var observer = new MutationObserver(function(mutations, observer) {
+	    // fired when a mutation occurs
+	    // console.log(mutations, observer);
+	    
+	    console.log('Display: ' + mutations[0].target.style.display);
+	});
+
+	// define what element should be observed by the observer
+	// and what types of mutations trigger the callback
+	observer.observe(notification, {
+	  // subtree: true,
+	  // childList: true,
+	  attributes: true
+	});
+
+
+	// verifyNotification();
 } else {
 	console.log('Not found notification box.');
 }
