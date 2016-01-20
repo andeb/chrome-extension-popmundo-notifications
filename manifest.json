@@ -1,7 +1,7 @@
 {
   "name": "Popmundo Notification",
   "description": "An unofficial app to show the popmundo notifications.",
-  "version": "0.2",
+  "version": "0.3",
   "manifest_version": 2,
   "permissions": [
     "http://*.popmundo.com/*",
