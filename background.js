@@ -1,3 +1,9 @@
+
+	chrome.webRequest.onCompleted.addListener(function(details) {
+		console.log(details);
+	}, { urls: ["http://*.popmundo.com/WebServices/A/Open.asmx/GetMenuNotificationCount"] });
+
+
 var state = [];
 
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
