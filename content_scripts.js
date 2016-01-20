@@ -1,6 +1,7 @@
 var notification = document.getElementById('top-menu-notifications-num');
 
 if (notification) {
+	// notify when client detects a notification
 	var observer = new MutationObserver((function(mutations, observer) {
 	    var display = notification.style.display;
 
@@ -11,11 +12,7 @@ if (notification) {
 		return arguments.callee;
 	})());
 
-	// define what element should be observed by the observer
-	// and what types of mutations trigger the callback
 	observer.observe(notification, {
-	  // subtree: true,
-	  // childList: true,
 	  attributes: true,
 	  characterData :true
 	});

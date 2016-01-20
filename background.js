@@ -2,11 +2,11 @@ var state = [];
 var messagesNumber = 0;
 
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
+	// only make a request when really have something to get
 	if (messagesNumber == request.messagesNumber)
 		return false;
 
-	// TODO: change pages title like Facebook (eg.: (4) popomundo)
-
+		// TODO: change pages title like Facebook (eg.: (4) popomundo)
 	if (messagesNumber < request.messagesNumber) {
 		var xhr = new XMLHttpRequest();
 
