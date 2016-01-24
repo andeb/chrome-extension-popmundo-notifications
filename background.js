@@ -1,12 +1,22 @@
 var state = [];
 var messagesNumber = 0;
 
+
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
 	// only make a request when really have something to get
 	if (messagesNumber == request.messagesNumber)
 		return false;
 
-		// TODO: change pages title like Facebook (eg.: (4) popomundo)
+	chrome.tabs.query({
+		url : "http://*.popmundo.com/*"
+	}, function(tabs) {
+		var message = {messagesNumber: request.messagesNumber};
+    	for (var i=0; i<tabs.length; ++i) {
+        	chrome.tabs.sendMessage(tabs[i].id, message);
+    	}
+	});
+	
+
 	if (messagesNumber < request.messagesNumber) {
 		var xhr = new XMLHttpRequest();
 
@@ -24,7 +34,6 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 					var UID = result[k].UID;
 
 					if (!contains(state, UID)) {
-						console.log(result[k]);
 						state.push(result[k]);
 						sendNotification(result[k]);
 					}

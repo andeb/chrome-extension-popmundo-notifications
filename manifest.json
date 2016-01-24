@@ -1,12 +1,13 @@
 {
   "name": "Popmundo Notification",
   "description": "An unofficial app to show the popmundo notifications.",
-  "version": "0.3",
+  "version": "0.4",
   "manifest_version": 2,
   "permissions": [
     "http://*.popmundo.com/*",
     "webRequest",
-    "notifications"
+    "notifications",
+    "tabs"
   ],
   "background": {
     "scripts": [
@@ -19,6 +20,8 @@
         "http://*.popmundo.com/*"
       ],
       "js": [
+        "jquery-1.10.1.min.js",
+        "favico.min.js",
         "content_scripts.js"
       ]
     }

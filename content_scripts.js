@@ -1,5 +1,12 @@
-var notification = document.getElementById('top-menu-notifications-num');
+var favicon=new Favico({
+    animation:'popFade'
+});
 
+chrome.runtime.onMessage.addListener(function(message) {
+	favicon.badge(message.messagesNumber);
+});
+
+var notification = document.getElementById('top-menu-notifications-num');
 if (notification) {
 	// notify when client detects a notification
 	var observer = new MutationObserver((function(mutations, observer) {
